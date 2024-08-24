@@ -1,0 +1,67 @@
+1. SELECT 
+    s.name AS student_name,
+    c.name AS class_name,
+    t.name AS teacher_name
+FROM 
+    students s
+JOIN 
+    classes c ON s.class_id = c.id
+JOIN 
+    teachers t ON c.teacher_id = t.id;
+
+
+
+
+2. SELECT 
+    c1.name AS class_name,
+    t.name AS teacher_name
+FROM 
+    classes c1
+JOIN 
+    teachers t ON c1.teacher_id = t.id
+WHERE 
+    EXISTS (
+        SELECT 1
+        FROM classes c2
+        WHERE c1.teacher_id = c2.teacher_id
+        AND c1.id <> c2.id
+    )
+ORDER BY 
+    teacher_name, class_name;
+
+3. SELECT * FROM student_class_teacher; (akses) 
+CREATE VIEW student_class_teacher AS
+SELECT 
+    s.name AS student_name,
+    c.name AS class_name,
+    t.name AS teacher_name
+FROM 
+    students s
+JOIN 
+    classes c ON s.class_id = c.id
+JOIN 
+    teachers t ON c.teacher_id = t.id;
+
+4. CALL GetStudentClassTeacher(); (akses)
+DELIMITER //
+
+CREATE PROCEDURE GetStudentClassTeacher()
+BEGIN
+    SELECT 
+        s.name AS student_name,
+        c.name AS class_name,
+        t.name AS teacher_name
+    FROM 
+        students s
+    JOIN 
+        classes c ON s.class_id = c.id
+    JOIN 
+        teachers t ON c.teacher_id = t.id;
+END //
+
+DELIMITER ;
+
+5. -- Insert with warning if duplicate (does not insert if duplicate exists)
+INSERT IGNORE INTO students (name, age, class_id) 
+VALUES ('Budi', 16, 1);
+(Menggunakan Ignore)
