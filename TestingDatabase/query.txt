@@ -42,7 +42,7 @@ JOIN
 JOIN 
     teachers t ON c.teacher_id = t.id;
 
-4. CALL GetStudentClassTeacher(); (akses)
+4. CALL GetStudentClassTeacher(); (akses/panggil procedure)
 DELIMITER //
 
 CREATE PROCEDURE GetStudentClassTeacher()
@@ -61,7 +61,6 @@ END //
 
 DELIMITER ;
 
-5. -- Insert with warning if duplicate (does not insert if duplicate exists)
+5. Jika tidak ingin duplicate ketika insert (Menggunakan Ignore)
 INSERT IGNORE INTO students (name, age, class_id) 
 VALUES ('Budi', 16, 1);
-(Menggunakan Ignore)
